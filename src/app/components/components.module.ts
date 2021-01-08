@@ -8,19 +8,23 @@ import { PeliculasPosterGridComponent } from './peliculas-poster-grid/peliculas-
 // rate
 // import { BrowserModule } from '@angular/platform-browser';
 import { RatingModule } from 'ng-starrating';
+import { PipesModule } from '../pipes/pipes.module';
+import { CastSlideShowComponent } from './cast-slide-show/cast-slide-show.component';
 
 @NgModule({
-  declarations: [NavbarComponent, SlideshowComponent, PeliculasPosterGridComponent],
+  declarations: [NavbarComponent, SlideshowComponent, PeliculasPosterGridComponent, CastSlideShowComponent],
   imports: [
     CommonModule,
     RouterModule,
     // BrowserModule, 
-    RatingModule
+    RatingModule,
+    PipesModule
   ],
   exports:[
     NavbarComponent,
     SlideshowComponent,
-    PeliculasPosterGridComponent
+    PeliculasPosterGridComponent,
+    CastSlideShowComponent
   ]
 })
 export class ComponentsModule { }

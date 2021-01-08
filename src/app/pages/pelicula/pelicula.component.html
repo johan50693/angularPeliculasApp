@@ -1,1 +1,45 @@
-<p>pelicula works!</p>
+
+
+<div class="row" *ngIf="pelicula">
+    <div class="col-md-6">
+        <img [src]="pelicula.poster_path | poster" 
+        class="img-thumbnail"
+        alt="">
+    </div>
+    <div class="col-md-6">
+        <h1>{{pelicula.title}}</h1>
+        <div class="raw">
+            <div class="col">
+                <star-rating value="{{pelicula.vote_average }}" totalstars="10" size="15px" checkedcolor="yellow" uncheckedcolor="grey"
+                    readonly="false">
+                </star-rating>
+            </div>
+            <div class="col text-white">
+                {{pelicula.vote_average | number: '1.1-2'}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-white">
+                {{pelicula.overview}}
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col">
+                <button class="btn btn-outline-danger"
+                        (click)=onRegresar()>
+                    Regresar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row mt-5" *ngIf="cast.length > 0">
+    <div class="col">
+        <app-cast-slide-show [cast]="cast"></app-cast-slide-show>
+    </div>
+</div>

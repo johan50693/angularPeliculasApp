@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { StarRatingComponent } from 'ng-starrating';
 import { Movie } from 'src/app/interfaces/cartelera-response';
 
@@ -10,17 +11,16 @@ import { Movie } from 'src/app/interfaces/cartelera-response';
 export class PeliculasPosterGridComponent implements OnInit {
 
   @Input() movies: Movie[];
-  constructor() { }
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    console.log(this.movies);
+    // console.log(this.movies);
   }
 
-  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}) {
-    alert(`Old Value:${$event.oldValue}, 
-      New Value: ${$event.newValue}, 
-      Checked Color: ${$event.starRating.checkedcolor}, 
-      Unchecked Color: ${$event.starRating.uncheckedcolor}`);
+  onMovieClick(movie: Movie){
+    // console.log(movie);
+    this.router.navigate(['/pelicula',movie.id]);
   }
 
 }

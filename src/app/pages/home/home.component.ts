@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Movie } from 'src/app/interfaces/cartelera-response';
 import { PeliculasService } from 'src/app/services/peliculas.service';
 
@@ -7,7 +7,7 @@ import { PeliculasService } from 'src/app/services/peliculas.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   public movies: Movie[]=[];
   public moviesSlideShow: Movie[]=[];
@@ -19,23 +19,27 @@ export class HomeComponent implements OnInit {
     const max= (document.documentElement.scrollHeight || document.body.scrollHeight);
 
     if(pos > max){
+      if(this.PeliculasService.cargando){return;}
       // Consulta siguiente pagina
-      this.PeliculasService.getCartelera().subscribe(resp =>{
-        this.movies.push(...resp.results);
+      this.PeliculasService.getCartelera().subscribe(movies =>{
+        this.movies.push(...movies);
       });
     }
 
   }
     
   constructor(private PeliculasService: PeliculasService) { 
-    this.PeliculasService.getCartelera().subscribe( resp => {
-      // console.log(resp.results);
-      this.movies= resp.results;
-      this.moviesSlideShow= resp.results;
+    this.PeliculasService.getCartelera().subscribe( movies => {
+      // console.log(movies.results);
+      this.movies= movies;
+      this.moviesSlideShow= movies;
     });
   }
 
   ngOnInit() {
   }
 
+  ngOnDestroy(){
+    this.PeliculasService.resetCarteleraPage();
+  }
 }
